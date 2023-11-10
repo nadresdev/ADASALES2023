@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Entities\Country.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>

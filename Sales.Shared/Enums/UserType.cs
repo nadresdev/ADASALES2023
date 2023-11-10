@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sales.Shared.Enums
 {
-    internal class UserType
+    public enum UserType
     {
+        Admin,
+        User
     }
 }
