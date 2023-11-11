@@ -18,13 +18,14 @@ namespace Sales.API.Data
             _context = context;
             _apiService = apiService;
             _userHelper = userHelper;
+           
         }
 
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Andres", "Valencia", "nadresdev@yopmail.com", "3153816265", "Calle falsa123", UserType.Admin);
+               await CheckUserAsync("1010", "Andres", "Valencia", "nadresdev@yopmail.com", "3153816265", "Calle falsa123", UserType.Admin);
 
 
         }
@@ -43,7 +44,6 @@ namespace Sales.API.Data
                     PhoneNumber = phone,
                     Address = address,
                     Document = document,
-                   
                     UserType = userType,
                 };
 
