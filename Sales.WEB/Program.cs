@@ -18,6 +18,15 @@ builder.Services.AddSingleton(sp => new HttpClient  //se marca singleton para en
 builder.Services.AddScoped<IRepository, Repository>();//inyecta  creando un objeto nuevo 
 builder.Services.AddSweetAlert2();
 builder.Services.AddAuthorizationCore();
+/*
+
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
+
+ Para agregar el  prpoveedor de autenticacion real*/
+
+builder.Services.AddScoped<AuthenticationProviderJWT>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+builder.Services.AddScoped<ILoginService, AuthenticationProviderJWT>(x => x.GetRequiredService<AuthenticationProviderJWT>());
+
 
 await builder.Build().RunAsync();
