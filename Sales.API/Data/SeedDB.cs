@@ -26,7 +26,7 @@ namespace Sales.API.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
            
-            await CheckUserAsync("1017", "YURLEY", "JARAMILLO", "yurley@gmail.com", "3153816265", "Calle falsa123", UserType.Admin);
+            await CheckUserAsync("1018", "andy", "valencia", "nadresdev@yopmail.com", "3153816265", "Calle falsa123", UserType.Admin);
 
 
         }
@@ -56,7 +56,7 @@ namespace Sales.API.Data
                     UserType = userType,
                 };
 
-                await _userHelper.AddUserAsync(user,"654321");
+                await _userHelper.AddUserAsync(user,"123456");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
             }
 

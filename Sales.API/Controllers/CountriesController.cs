@@ -12,7 +12,7 @@ namespace Sales.API.Controllers
 
     [ApiController]
     [Route("/api/countries")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CountriesController : ControllerBase
     {
         private readonly DataContext _context;
