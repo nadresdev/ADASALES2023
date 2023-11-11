@@ -3,7 +3,6 @@ using Sales.API.Helpers;
 using Sales.API.Services;
 using Sales.Shared.Entities;
 using Sales.Shared.Enums;
-using Sales.Shared.Responses;
 
 namespace Sales.API.Data
 {
