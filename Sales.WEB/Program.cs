@@ -19,4 +19,5 @@ builder.Services.AddScoped<IRepository, Repository>();//inyecta  creando un obje
 builder.Services.AddSweetAlert2();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
+
 await builder.Build().RunAsync();

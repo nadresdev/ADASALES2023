@@ -10,7 +10,14 @@ namespace Sales.WEB.Auth
 
             
             var anonimous = new ClaimsIdentity();
-            var AndyUser = new ClaimsIdentity(authenticationType: "test");
+            var AndyUser = new ClaimsIdentity(new List<Claim>
+            {  new Claim("FirstName", "Andres"),
+                new Claim("LastName", "valencia"),
+                new Claim(ClaimTypes.Name, "nadresdev@gmail.com"),
+                new Claim(ClaimTypes.Role, "Admin")
+            },
+            authenticationType: "test");
+
             return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(AndyUser)));
             //return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(anonimous)));
         }

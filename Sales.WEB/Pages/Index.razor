@@ -2,9 +2,10 @@
 
 <PageTitle>Index</PageTitle>
 
-<AuthorizeView>
+
+<AuthorizeView Roles="Admin">
     <Authorized>
-        <p>Estas autenticado</p>
+        <p>Estas autenticado, @context.User.Identity?.Name</p>
     </Authorized>
     <NotAuthorized>
         <p>No estas autorizado</p>
