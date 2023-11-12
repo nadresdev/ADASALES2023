@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Sales.API.Data;
-using Sales.Shared.Entities;
+using Sales.Shared.Entities; 
+
 
 namespace Sales.API.Controllers
 {
