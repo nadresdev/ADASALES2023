@@ -25,10 +25,27 @@ namespace Sales.API.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRolesAsync();
-           
+            await CheckCategoriesAsync();
+
             await CheckUserAsync("1018", "andy", "valencia", "nadresdev@yopmail.com", "3153816265", "Calle falsa123", UserType.Admin);
 
 
+        }
+
+
+        private async Task CheckCategoriesAsync()
+        {
+            if (!_context.Categories.Any())
+            {
+                _context.Categories.Add(new Category { Name = "Deportes" });
+                _context.Categories.Add(new Category { Name = "Calzado" });
+                _context.Categories.Add(new Category { Name = "Tecnología " });
+                
+                _context.Categories.Add(new Category { Name = "Motocicletas" });
+                
+                _context.Categories.Add(new Category { Name = "Video Juegos" });
+                await _context.SaveChangesAsync();
+            }
         }
 
 
@@ -37,7 +54,8 @@ namespace Sales.API.Data
 
 
 
-                            private async Task<User> CheckUserAsync(string document, 
+
+        private async Task<User> CheckUserAsync(string document, 
             string firstName, string lastName, string email, 
             string phone, string address, UserType userType)
         {
