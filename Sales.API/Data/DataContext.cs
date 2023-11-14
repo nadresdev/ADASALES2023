@@ -19,6 +19,7 @@ namespace Sales.API.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<TemporalSale> TemporalSales { get; set; }
 
 
 
@@ -28,6 +29,7 @@ namespace Sales.API.Data
             modelBuilder.Entity<Country>().HasIndex(x => x.Name).IsUnique();
             modelBuilder.Entity<Category>().HasIndex(y => y.Name).IsUnique();
             modelBuilder.Entity<Product>().HasIndex(x => x.Name).IsUnique();
+             
         
         }
 
