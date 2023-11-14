@@ -52,6 +52,7 @@ namespace Sales.API.Controllers
             }
 
 
+
             return BadRequest("Email o contraseña incorrectos.");
         }
 
