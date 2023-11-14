@@ -22,7 +22,19 @@
 }
 else
 {
-   
+    <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+        
+        
+        <AuthorizeView>
+            <Authorized>
+                @if (counter > 0)
+                {
+                    <a href="/Orders/ShowCart" class="btn btn-primary">Ver Carro de Compras (@counter)</a>
+                }
+            </Authorized>
+        </AuthorizeView>
+    </div>
+
 
     
 
@@ -53,6 +65,39 @@ else
 
     public List<Product>? Products { get; set; }
 
+    private int counter = 0;
+    private bool isAuthenticated;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; } = null!;
+    protected async override Task OnParametersSetAsync()
+    {
+        await CheckIsAuthenticatedAsync();
+        await LoadCounterAsync();
+    }
+
+    private async Task CheckIsAuthenticatedAsync()
+    {
+        var authenticationState = await authenticationStateTask;
+        isAuthenticated = authenticationState.User.Identity!.IsAuthenticated;
+    }
+
+    private async Task LoadCounterAsync()
+    {
+        if (!isAuthenticated)
+        {
+            return;
+        }
+
+        var responseHttp = await repository.Get<int>("/api/temporalSales/count");
+        if (responseHttp.Error)
+        {
+            return;
+        }
+        counter = responseHttp.Response;
+    }
+
+
 
     protected async override Task OnInitializedAsync()
     {
@@ -79,8 +124,48 @@ else
     }
 
    
-    private void AddToCartAsync(int productId)
-    {
+    
 
+    private async Task AddToCartAsync(int productId)
+    {
+        if (!isAuthenticated)
+        {
+            navigationManager.NavigateTo("/Login");
+            var toast1 = sweetAlertService.Mixin(new SweetAlertOptions
+                {
+                    Toast = true,
+                    Position = SweetAlertPosition.TopEnd,
+                    ShowConfirmButton = false,
+                    Timer = 5000
+                });
+            await toast1.FireAsync(icon: SweetAlertIcon.Error, message: "Debes haber iniciado sesión para poder agregar productos al carro de compras.");
+            return;
+        }
+
+        var temporalSaleDTO = new TemporalSaleDTO
+            {
+                ProductId = productId
+            };
+
+        var httpResponse = await repository.Post("/api/temporalSales", temporalSaleDTO);
+        if (httpResponse.Error)
+        {
+            var message = await httpResponse.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        await LoadCounterAsync();
+
+        var toast2 = sweetAlertService.Mixin(new SweetAlertOptions
+            {
+                Toast = true,
+                Position = SweetAlertPosition.TopEnd,
+                ShowConfirmButton = false,
+                Timer = 5000
+            });
+        await toast2.FireAsync(icon: SweetAlertIcon.Success, message: "Producto agregado al carro de compras.");
     }
+}
+
 }

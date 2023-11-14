@@ -29,7 +29,7 @@ namespace Sales.API.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == User.Identity!.Name);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == User.Identity!.Name); //Lo saca del token 
             if (user == null)
             {
                 return NotFound();
@@ -70,7 +70,7 @@ namespace Sales.API.Controllers
         }
 
         [HttpGet("count")]
-        public async Task<ActionResult> GetCount()
+        public async Task<ActionResult> GetCount()//suma la cantidad
         {
             return Ok(await _context.TemporalSales
                 .Where(x => x.User!.Email == User.Identity!.Name)
