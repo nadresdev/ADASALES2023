@@ -31,8 +31,8 @@ else
                                 <th>Descripción</th>
                                 <th>Precio</th>
                                 <th>Inventario</th>
-                                <th>Categorías</th>
-                                <th>Imagenes</th>
+                                
+                               
                                 <th>Imagen Principal</th>
                                 <th style="width:200px"></th>
                             </tr>
@@ -53,12 +53,7 @@ else
                                     <td>
                                         @($"{product.Stock:N2}")
                                     </td>
-                                    <td>
-                                        @product.ProductCategoriesNumber
-                                    </td>
-                                    <td>
-                                        @product.ProductImagesNumber
-                                    </td>
+                                   
                                     <td>
                                         <img src="@product.MainImage" style="width:100px;"/>
                                     </td>
