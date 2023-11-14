@@ -24,6 +24,7 @@ namespace Sales.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> Get([FromQuery] PaginationDTO pagination)
         {
             var queryable = _context.Products
@@ -39,7 +40,7 @@ namespace Sales.API.Controllers
                 .ToListAsync());
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetAsync(int id)
         {
