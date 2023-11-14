@@ -55,6 +55,7 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=ConexionDat
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IApiService, ApiService>();
+builder.Services.AddScoped<IFileStorage, FileStorage>();
 
 
 
