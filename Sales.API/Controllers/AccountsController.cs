@@ -51,6 +51,7 @@ namespace Sales.API.Controllers
                 return Ok(BuildToken(user));
             }
 
+
             return BadRequest("Email o contraseña incorrectos.");
         }
 

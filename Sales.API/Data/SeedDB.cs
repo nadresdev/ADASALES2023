@@ -74,7 +74,7 @@ namespace Sales.API.Data
                     UserType = userType,
                 };
 
-                await _userHelper.AddUserAsync(user,"123456");
+                await _userHelper.AddUserAsync(user,"123@Admin");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
             }
 
