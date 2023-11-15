@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Azure.Messaging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,10 @@ namespace Sales.API.Controllers
             if (result.Succeeded)
             {
                 var user = await _userHelper.GetUserAsync(model.Email);
-                return Ok(BuildToken(user));
+                return Ok(
+                    BuildToken(user)
+                  
+                    ) ;
             }
 
 
