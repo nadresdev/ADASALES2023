@@ -37,7 +37,7 @@ namespace Sales.WEB.Repositories
             return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
 
-        public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T model)
+        public async Task<HttpResponseWrapper<TResponse>> Post<T,TResponse>(string url, T model)
         {
             var messageJSON = JsonSerializer.Serialize(model);
             var messageContet = new StringContent(messageJSON, Encoding.UTF8, "application/json");
@@ -58,8 +58,8 @@ namespace Sales.WEB.Repositories
 
         public async Task<HttpResponseWrapper<object>> Delete<T>(string url)
         {
-            var responseHTTP =  await _httpClient.DeleteAsync(url);
-            return new HttpResponseWrapper<object> (null, !responseHTTP.IsSuccessStatusCode, responseHTTP); 
+            var responseHTTP = await _httpClient.DeleteAsync(url);
+            return new HttpResponseWrapper<object>(null, !responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
 
         public async Task<HttpResponseWrapper<object>> Put<T>(string url, T model)

@@ -24,6 +24,9 @@ namespace Sales.API.Controllers
         public async Task<ActionResult> Post(TemporalSaleDTO temporalSaleDTO)
         {
             var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == temporalSaleDTO.ProductId);
+            var temporalCreada = await _context.TemporalSales.FirstOrDefaultAsync(x => x.ProductId == temporalSaleDTO.ProductId);
+
+
             if (product == null)
             {
                 return NotFound();
@@ -43,7 +46,12 @@ namespace Sales.API.Controllers
                 User = user
             };
 
-            try
+            if (product.Stock < temporalSale.Quantity) {
+
+                return BadRequest("Excede la cantidad del producto disponible, ver detalles de producto!");
+            }
+
+                try
             {
                 _context.Add(temporalSale);
                 await _context.SaveChangesAsync();
@@ -53,6 +61,49 @@ namespace Sales.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            return Ok(await _context.TemporalSales
+                .Include(ts => ts.User!)
+                .Include(ts => ts.Product!)
+                .ThenInclude(p => p.ProductCategories!)
+                .ThenInclude(pc => pc.Category)
+                .Include(ts => ts.Product!)
+                .ThenInclude(p => p.ProductImages)
+                .FirstOrDefaultAsync(x => x.Id == id));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put(TemporalSaleDTO temporalSaleDTO)
+        {
+            var currentTemporalSale = await _context.TemporalSales.FirstOrDefaultAsync(x => x.Id == temporalSaleDTO.Id);
+            if (currentTemporalSale == null)
+            {
+                return NotFound();
+            }
+
+            currentTemporalSale!.Remarks = temporalSaleDTO.Remarks;
+            currentTemporalSale.Quantity = temporalSaleDTO.Quantity;
+
+            _context.Update(currentTemporalSale);
+            await _context.SaveChangesAsync();
+            return Ok(temporalSaleDTO);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var temporalSale = await _context.TemporalSales.FirstOrDefaultAsync(x => x.Id == id);
+            if (temporalSale == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(temporalSale);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpGet]
