@@ -5,8 +5,9 @@
         Nuevo,
         Despachado,
         Enviado,
-        Confirmado
-    
+        Confirmado,
+        Cancelado
+
     }
 }
 

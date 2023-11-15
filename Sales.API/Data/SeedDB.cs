@@ -29,7 +29,7 @@ namespace Sales.API.Data
             await CheckProductsAsync();
             await CheckCategoriesAsync();
        
-            await CheckUserAsync("1018", "andy", "valencia", "nadresdev@yopmail.com", "3153816265", "Calle falsa123", UserType.Admin);
+            await CheckUserAsync("1018", "andy", "valencia", "admin@gmail.com", "3153816265", "Calle falsa123", UserType.Admin);
             await CheckUserAsync("1010", "emanuel", "urrutia", "ema@gmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
 
 
@@ -70,7 +70,13 @@ namespace Sales.API.Data
             if (!_context.Products.Any())
             {
                 await AddProductAsync("Adidas Barracuda", 270000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "adidas_barracuda.png" });
-                
+                await AddProductAsync("Adidas Superstar", 250000M, 12F, new List<string>() { "Calzado", "Deportes" }, new List<string>() { "Adidas_superstar.png" });
+                await AddProductAsync("AirPods", 1300000M, 12F, new List<string>() { "Tecnología", "Apple" }, new List<string>() { "airpos.png", "airpos2.png" });
+                await AddProductAsync("Audifonos Bose", 870000M, 12F, new List<string>() { "Tecnología" }, new List<string>() { "audifonos_bose.png" });
+                await AddProductAsync("Bicicleta Ribble", 12000000M, 6F, new List<string>() { "Deportes" }, new List<string>() { "bicicleta_ribble.png" });
+                await AddProductAsync("Camisa Cuadros", 56000M, 24F, new List<string>() { "Ropa" }, new List<string>() { "camisa_cuadros.png" });
+                await AddProductAsync("Casco Bicicleta", 820000M, 12F, new List<string>() { "Deportes" }, new List<string>() { "casco_bicicleta.png", "casco.png" });
+
                 await _context.SaveChangesAsync();
             }
         }
@@ -127,6 +133,7 @@ namespace Sales.API.Data
                     Address = address,
                     Document = document,
                     UserType = userType,
+                    EmailConfirmed = true,
                 };
 
                 await _userHelper.AddUserAsync(user,"123@Admin");
