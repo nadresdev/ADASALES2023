@@ -1,0 +1,107 @@
+﻿@page "/sales"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Sales is null)
+{
+    <div class="spinner" />
+}
+else
+{
+    <GenericList MyList="Sales">
+        <Body>
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        <i class="oi oi-dollar" /> Pedidos
+                    </span>
+                </div>
+                <div class="card-body">
+                    <Pagination CurrentPage="currentPage"
+                                TotalPages="totalPages"
+                                SelectedPage="SelectedPageAsync" />
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                                <th>Comentario</th>
+                                <th>Estado</th>
+                                <th>Líneas</th>
+                                <th>Cantidad</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sale in Sales)
+                            {
+                                <tr>
+                                    <td>
+                                        @($"{sale.Date:yyyy/MM/dd hh:mm tt}")
+                                    </td>
+                                    <td>
+                                        @sale.User!.FullName
+                                    </td>
+                                    <td>
+                                        @sale.Remarks
+                                    </td>
+                                    <td>
+                                        @sale.OrderStatus
+                                    </td>
+                                    <td>
+                                        @sale.Lines
+                                    </td>
+                                    <td>
+                                        @($"{sale.Quantity:N2}")
+                                    </td>
+                                    <td>
+                                        @($"{sale.Value:C2}")
+                                    </td>
+                                    <td>
+                                        <a href="/saleDetails/@sale.Id" class="btn btn-info"><i class="oi oi-info" /> Detalles</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </Body>
+    </GenericList>
+}
+
+@code {
+  
+    public List<Sale>? Sales { get; set; }
+
+  
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+   
+    private async Task LoadAsync()
+    {
+       
+        
+
+        try
+        {
+            var responseHppt = await repository.Get<List<Sale>>("/api/sales");
+         
+            Sales = responseHppt.Response!;
+          
+        }
+        catch (Exception ex)
+        {
+            await sweetAlertService.FireAsync("Error", ex.Message, SweetAlertIcon.Error);
+        }
+    }
+}
+
